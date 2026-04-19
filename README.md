@@ -16,17 +16,21 @@ no sistema operacional. Todos os comandos são configurados externamente via
 
 ```
 assistente_virtual/
+├── audios/
+│   ├── abrir_navegador.mp4     ← Áudio de teste gravado
+│   ├── abrir_editor.mp4        ← Áudio de teste gravado
+│   ├── aumentar_volume.mp4     ← Áudio de teste gravado
+│   └── bloquear_tela.mp4       ← Áudio de teste gravado
 ├── config/
-│   └── commands.json              ← Configuração de todos os comandos e ações
+│   └── commands.json           ← Configuração de todos os comandos e ações
 ├── src/
-│   ├── transcritor.py             ← Sensor: Whisper (HuggingFace) para transcrição
-│   ├── processador_comandos.py    ← NLP: NLTK (tokenização + similaridade Jaccard)
-│   └── atuadores.py               ← Atuadores: ações reais no SO
+│   ├── transcritor.py          ← Sensor: Whisper (HuggingFace) para transcrição
+│   ├── processador_comandos.py ← NLP: NLTK (tokenização + similaridade Jaccard)
+│   └── atuadores.py            ← Atuadores: ações reais no SO
 ├── tests/
-│   └── teste_assistante.py         ← Testes automatizados com unittest
-├── audio_tests/                   ← Áudios de teste (gerados por generate_test_audio.py)
-├── assistente.py                   ← Script principal (ponto de entrada)
-├── gerar_teste_audio.py           ← Gerador de áudios para testes
+│   └── test_assistente.py      ← Testes automatizados com unittest
+├── assistente.py               ← Script principal (ponto de entrada)
+├── gerar_teste_audio.py        ← Gerador de áudios sintéticos para testes
 └── requirements.txt
 ```
 
@@ -34,12 +38,12 @@ assistente_virtual/
 
 ## Comandos Disponíveis
 
-| Comando          | Exemplo de frase               | Ação                          |
-|------------------|--------------------------------|-------------------------------|
-| Abrir navegador  | "abrir navegador"              | Abre o navegador padrão       |
-| Abrir editor     | "abrir editor de código"       | Abre o VS (ou alternativa)    |
-| Aumentar volume  | "aumentar volume"              | Aumenta o volume em 10%       |
-| Bloquear tela    | "bloquear a tela"              | Bloqueia a sessão do usuário  |
+| Comando          | Exemplo de frase               | Ação                           |
+|------------------|--------------------------------|--------------------------------|
+| Abrir navegador  | "abrir navegador"              | Abre o navegador padrão        |
+| Abrir editor     | "abrir editor de código"       | Abre o VS Code (ou alternativa)|
+| Aumentar volume  | "aumentar volume"              | Aumenta o volume em 10%        |
+| Bloquear tela    | "bloquear a tela"              | Bloqueia a sessão do usuário   |
 
 ---
 
@@ -49,9 +53,6 @@ assistente_virtual/
 ```bash
 # Linux (Ubuntu/Debian)
 sudo apt install ffmpeg portaudio19-dev python3-dev
-
-# macOS
-brew install ffmpeg portaudio
 ```
 
 ### 2. Dependências Python
@@ -59,8 +60,9 @@ brew install ffmpeg portaudio
 pip install -r requirements.txt
 ```
 
-### 3. Pacotes NLTK (baixados automaticamente na primeira execução)
-Os pacotes `punkt`, `punkt_tab` e `stopwords` são baixados automaticamente.
+### 3. Pacotes NLTK
+Os pacotes `punkt`, `punkt_tab` e `stopwords` são baixados automaticamente
+na primeira execução, caso haja conexão com a internet.
 
 ---
 
@@ -68,35 +70,32 @@ Os pacotes `punkt`, `punkt_tab` e `stopwords` são baixados automaticamente.
 
 ### Modo interativo (microfone)
 ```bash
-python assistant.py
+python assistente.py
 ```
 
 ### Processar um arquivo de áudio
 ```bash
-python assistant.py --file caminho/para/audio.wav
+python assistente.py --arquivo audios/abrir_navegador.mp4
 ```
 
 ---
 
 ## Testes Automatizados
 
-### 1. Gerar os arquivos de áudio de teste
+### Executar os testes
 ```bash
-python generate_test_audio.py
+python -m unittest tests/test_assistente.py -v
 ```
 
-### 2. Executar os testes
-```bash
-python -m unittest tests/test_assistant.py -v
-```
+Na primeira execução o Whisper baixa o modelo (~250 MB) e armazena em cache.
 
-### Suites de testes
+### Suítes de testes
 
-| Suite                  | Descrição                                        |
-|------------------------|--------------------------------------------------|
-| `TestCommandProcessor` | Testa o NLP isolado (sem áudio, sem SO)          |
-| `TestActuator`         | Testa os atuadores com mocks do SO               |
-| `TestIntegration`      | Pipeline completo (com e sem arquivos de áudio)  |
+| Suíte                      | Descrição                                       |
+|----------------------------|-------------------------------------------------|
+| `TesteProcessadorComandos` | Testa o NLP isolado (sem áudio, sem SO)         |
+| `TesteAtuador`             | Testa os atuadores com mocks do SO              |
+| `TesteIntegracao`          | Pipeline completo com mocks e arquivos de áudio |
 
 ---
 
@@ -143,4 +142,4 @@ nenhum código Python:
 }
 ```
 
-Em seguida, adicione o método `_action_meu_novo_comando` em `atuadores.py`.
+Em seguida, adicione o método `_acao_meu_novo_comando` em `atuadores.py`.
