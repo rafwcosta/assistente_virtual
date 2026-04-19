@@ -30,7 +30,6 @@ assistente_virtual/
 ├── tests/
 │   └── teste_assistente.py     ← Testes automatizados com unittest
 ├── assistente.py               ← Script principal (ponto de entrada)
-├── interface.py                ← Interface gráfica (CustomTkinter)
 └── requirements.txt
 ```
 
@@ -67,11 +66,6 @@ na primeira execução, caso haja conexão com a internet.
 ---
 
 ## Como Usar
-
-### Interface gráfica
-```bash
-python interface.py
-```
 
 ### Modo interativo (terminal)
 ```bash
