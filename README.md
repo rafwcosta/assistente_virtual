@@ -17,10 +17,10 @@ no sistema operacional. Todos os comandos são configurados externamente via
 ```
 assistente_virtual/
 ├── audios/
-│   ├── abrir_navegador.mp4     ← Áudio de teste gravado
-│   ├── abrir_editor.mp4        ← Áudio de teste gravado
-│   ├── aumentar_volume.mp4     ← Áudio de teste gravado
-│   └── bloquear_tela.mp4       ← Áudio de teste gravado
+│   ├── abrir_navegador.wav     ← Áudio de teste gravado
+│   ├── abrir_editor.wav        ← Áudio de teste gravado
+│   ├── aumentar_volume.wav     ← Áudio de teste gravado
+│   └── bloquear_tela.wav       ← Áudio de teste gravado
 ├── config/
 │   └── commands.json           ← Configuração de todos os comandos e ações
 ├── src/
@@ -28,9 +28,9 @@ assistente_virtual/
 │   ├── processador_comandos.py ← NLP: NLTK (tokenização + similaridade Jaccard)
 │   └── atuadores.py            ← Atuadores: ações reais no SO
 ├── tests/
-│   └── test_assistente.py      ← Testes automatizados com unittest
+│   └── teste_assistente.py     ← Testes automatizados com unittest
 ├── assistente.py               ← Script principal (ponto de entrada)
-├── gerar_teste_audio.py        ← Gerador de áudios sintéticos para testes
+├── interface.py                ← Interface gráfica (CustomTkinter)
 └── requirements.txt
 ```
 
@@ -68,14 +68,19 @@ na primeira execução, caso haja conexão com a internet.
 
 ## Como Usar
 
-### Modo interativo (microfone)
+### Interface gráfica
+```bash
+python interface.py
+```
+
+### Modo interativo (terminal)
 ```bash
 python assistente.py
 ```
 
 ### Processar um arquivo de áudio
 ```bash
-python assistente.py --arquivo audios/abrir_navegador.mp4
+python assistente.py --arquivo audios/abrir_navegador.wav
 ```
 
 ---
@@ -84,7 +89,7 @@ python assistente.py --arquivo audios/abrir_navegador.mp4
 
 ### Executar os testes
 ```bash
-python -m unittest tests/test_assistente.py -v
+python -m unittest tests/teste_assistente.py -v
 ```
 
 Na primeira execução o Whisper baixa o modelo (~250 MB) e armazena em cache.
