@@ -153,7 +153,7 @@ class TesteIntegracao(unittest.TestCase):
         self.assertTrue(self.atuador.executar(comando))
 
     def teste_audio_abrir_navegador(self):
-        caminho = self._pular_se_sem_audio("abrir_navegador.mp4")
+        caminho = self._pular_se_sem_audio("abrir_navegador.wav")
         from src.transcritor import Transcritor
         transcritor = Transcritor(caminho_config=CAMINHO_CONFIG)
         texto = transcritor.transcrever_arquivo(caminho)
@@ -162,7 +162,7 @@ class TesteIntegracao(unittest.TestCase):
         self.assertEqual(comando["id"], "open_browser")
 
     def teste_audio_abrir_editor(self):
-        caminho = self._pular_se_sem_audio("abrir_editor.mp4")
+        caminho = self._pular_se_sem_audio("abrir_editor.wav")
         from src.transcritor import Transcritor
         transcritor = Transcritor(caminho_config=CAMINHO_CONFIG)
         texto = transcritor.transcrever_arquivo(caminho)
@@ -171,7 +171,7 @@ class TesteIntegracao(unittest.TestCase):
         self.assertEqual(comando["id"], "open_editor")
 
     def teste_audio_aumentar_volume(self):
-        caminho = self._pular_se_sem_audio("aumentar_volume.mp4")
+        caminho = self._pular_se_sem_audio("aumentar_volume.wav")
         from src.transcritor import Transcritor
         transcritor = Transcritor(caminho_config=CAMINHO_CONFIG)
         texto = transcritor.transcrever_arquivo(caminho)
@@ -180,7 +180,7 @@ class TesteIntegracao(unittest.TestCase):
         self.assertEqual(comando["id"], "increase_volume")
 
     def teste_audio_bloquear_tela(self):
-        caminho = self._pular_se_sem_audio("bloquear_tela.mp4")
+        caminho = self._pular_se_sem_audio("bloquear_tela.wav")
         from src.transcritor import Transcritor
         transcritor = Transcritor(caminho_config=CAMINHO_CONFIG)
         texto = transcritor.transcrever_arquivo(caminho)
