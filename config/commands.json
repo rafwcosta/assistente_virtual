@@ -1,0 +1,77 @@
+{
+  "commands": [
+    {
+      "id": "open_browser",
+      "keywords": [
+        "abrir navegador"
+      ],
+      "action": "open_browser",
+      "description": "Abre o navegador padrão do sistema",
+      "response": "Abrindo o navegador web..."
+    },
+    {
+      "id": "open_editor",
+      "keywords": [
+        "abrir editor"
+      ],
+      "action": "open_editor",
+      "description": "Abre o editor de código configurado",
+      "response": "Abrindo o editor de código..."
+    },
+    {
+      "id": "increase_volume",
+      "keywords": [
+        "aumentar volume"
+      ],
+      "action": "increase_volume",
+      "description": "Aumenta o volume do sistema",
+      "response": "Aumentando o volume..."
+    },
+    {
+      "id": "lock_screen",
+      "keywords": [
+        "bloquear tela"
+      ],
+      "action": "lock_screen",
+      "description": "Bloqueia a tela do computador",
+      "response": "Bloqueando a tela..."
+    }
+  ],
+  "actions": {
+    "open_browser": {
+      "path": {
+        "Linux": "xdg-open",
+        "Windows": "explorer",
+        "Darwin": "open"
+      },
+      "url": "https://www.google.com"
+    },
+    "open_editor": {
+      "path": {
+        "Linux": "code",
+        "Windows": "code.exe",
+        "Darwin": "code"
+      },
+      "alternatives": ["gedit", "kate", "mousepad", "xed"]
+    },
+    "increase_volume": {
+      "step": 10,
+      "max": 100
+    },
+    "lock_screen": {
+      "linux_commands": [
+        "loginctl lock-session",
+        "xdg-screensaver lock",
+        "gnome-screensaver-command --lock",
+        "xlock -mode blank"
+      ]
+    }
+  },
+  "settings": {
+    "model": "openai/whisper-small",
+    "language": "portuguese",
+    "recording_duration": 5,
+    "sample_rate": 16000,
+    "confidence_threshold": 0.5
+  }
+}
