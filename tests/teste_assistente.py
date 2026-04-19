@@ -25,6 +25,7 @@ class TesteProcessadorComandos(unittest.TestCase):
             with self.subTest(frase=frase):
                 resultado = self.processador.encontrar_comando(frase)
                 self.assertIsNotNone(resultado)
+                assert resultado is not None
                 self.assertEqual(resultado["id"], "open_browser")
 
     def teste_reconhece_abrir_editor(self):
@@ -33,6 +34,7 @@ class TesteProcessadorComandos(unittest.TestCase):
             with self.subTest(frase=frase):
                 resultado = self.processador.encontrar_comando(frase)
                 self.assertIsNotNone(resultado)
+                assert resultado is not None
                 self.assertEqual(resultado["id"], "open_editor")
 
     def teste_reconhece_aumentar_volume(self):
@@ -41,6 +43,7 @@ class TesteProcessadorComandos(unittest.TestCase):
             with self.subTest(frase=frase):
                 resultado = self.processador.encontrar_comando(frase)
                 self.assertIsNotNone(resultado)
+                assert resultado is not None
                 self.assertEqual(resultado["id"], "increase_volume")
 
     def teste_reconhece_bloquear_tela(self):
@@ -49,6 +52,7 @@ class TesteProcessadorComandos(unittest.TestCase):
             with self.subTest(frase=frase):
                 resultado = self.processador.encontrar_comando(frase)
                 self.assertIsNotNone(resultado)
+                assert resultado is not None
                 self.assertEqual(resultado["id"], "lock_screen")
 
     def teste_texto_vazio_retorna_none(self):
@@ -63,6 +67,7 @@ class TesteProcessadorComandos(unittest.TestCase):
         resultado = self.processador.encontrar_comando("abrir navegador")
         self.assertIsNotNone(resultado)
         for campo in ("id", "action", "keywords", "description", "response"):
+            assert resultado is not None
             self.assertIn(campo, resultado)
 
     def teste_config_carregada_do_json(self):
@@ -127,6 +132,7 @@ class TesteIntegracao(unittest.TestCase):
     def teste_pipeline_abrir_navegador(self, mock_wb):
         comando = self.processador.encontrar_comando("abrir navegador")
         self.assertIsNotNone(comando)
+        assert comando is not None
         self.assertEqual(comando["id"], "open_browser")
         self.assertTrue(self.atuador.executar(comando))
         mock_wb.assert_called_once()
@@ -135,6 +141,7 @@ class TesteIntegracao(unittest.TestCase):
     def teste_pipeline_abrir_editor(self, mock_popen):
         comando = self.processador.encontrar_comando("abrir editor de código")
         self.assertIsNotNone(comando)
+        assert comando is not None
         self.assertEqual(comando["id"], "open_editor")
         self.assertTrue(self.atuador.executar(comando))
 
@@ -142,6 +149,7 @@ class TesteIntegracao(unittest.TestCase):
     def teste_pipeline_aumentar_volume(self, mock_os):
         comando = self.processador.encontrar_comando("aumentar volume")
         self.assertIsNotNone(comando)
+        assert comando is not None
         self.assertEqual(comando["id"], "increase_volume")
         self.assertTrue(self.atuador.executar(comando))
 
@@ -149,6 +157,7 @@ class TesteIntegracao(unittest.TestCase):
     def teste_pipeline_bloquear_tela(self, mock_os):
         comando = self.processador.encontrar_comando("bloquear tela")
         self.assertIsNotNone(comando)
+        assert comando is not None
         self.assertEqual(comando["id"], "lock_screen")
         self.assertTrue(self.atuador.executar(comando))
 
@@ -159,6 +168,7 @@ class TesteIntegracao(unittest.TestCase):
         texto = transcritor.transcrever_arquivo(caminho)
         comando = self.processador.encontrar_comando(texto)
         self.assertIsNotNone(comando)
+        assert comando is not None
         self.assertEqual(comando["id"], "open_browser")
 
     def teste_audio_abrir_editor(self):
@@ -168,6 +178,7 @@ class TesteIntegracao(unittest.TestCase):
         texto = transcritor.transcrever_arquivo(caminho)
         comando = self.processador.encontrar_comando(texto)
         self.assertIsNotNone(comando)
+        assert comando is not None
         self.assertEqual(comando["id"], "open_editor")
 
     def teste_audio_aumentar_volume(self):
@@ -177,6 +188,7 @@ class TesteIntegracao(unittest.TestCase):
         texto = transcritor.transcrever_arquivo(caminho)
         comando = self.processador.encontrar_comando(texto)
         self.assertIsNotNone(comando)
+        assert comando is not None
         self.assertEqual(comando["id"], "increase_volume")
 
     def teste_audio_bloquear_tela(self):
@@ -186,6 +198,7 @@ class TesteIntegracao(unittest.TestCase):
         texto = transcritor.transcrever_arquivo(caminho)
         comando = self.processador.encontrar_comando(texto)
         self.assertIsNotNone(comando)
+        assert comando is not None
         self.assertEqual(comando["id"], "lock_screen")
 
 
