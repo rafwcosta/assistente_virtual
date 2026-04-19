@@ -10,7 +10,7 @@ from src.processador_comandos import ProcessadorComandos
 from src.atuadores import Atuador
 
 CAMINHO_CONFIG = os.path.join(os.path.dirname(__file__), "..", "config", "commands.json")
-PASTA_AUDIOS = os.path.join(os.path.dirname(__file__), "..", "audio_tests")
+PASTA_AUDIOS = os.path.join(os.path.dirname(__file__), "..", "audios")
 
 
 class TesteProcessadorComandos(unittest.TestCase):
@@ -153,7 +153,7 @@ class TesteIntegracao(unittest.TestCase):
         self.assertTrue(self.atuador.executar(comando))
 
     def teste_audio_abrir_navegador(self):
-        caminho = self._pular_se_sem_audio("open_browser.wav")
+        caminho = self._pular_se_sem_audio("abrir_navegador.mp4")
         from src.transcritor import Transcritor
         transcritor = Transcritor(caminho_config=CAMINHO_CONFIG)
         texto = transcritor.transcrever_arquivo(caminho)
@@ -162,7 +162,7 @@ class TesteIntegracao(unittest.TestCase):
         self.assertEqual(comando["id"], "open_browser")
 
     def teste_audio_abrir_editor(self):
-        caminho = self._pular_se_sem_audio("open_editor.wav")
+        caminho = self._pular_se_sem_audio("abrir_editor.mp4")
         from src.transcritor import Transcritor
         transcritor = Transcritor(caminho_config=CAMINHO_CONFIG)
         texto = transcritor.transcrever_arquivo(caminho)
@@ -171,7 +171,7 @@ class TesteIntegracao(unittest.TestCase):
         self.assertEqual(comando["id"], "open_editor")
 
     def teste_audio_aumentar_volume(self):
-        caminho = self._pular_se_sem_audio("increase_volume.wav")
+        caminho = self._pular_se_sem_audio("aumentar_volume.mp4")
         from src.transcritor import Transcritor
         transcritor = Transcritor(caminho_config=CAMINHO_CONFIG)
         texto = transcritor.transcrever_arquivo(caminho)
@@ -180,7 +180,7 @@ class TesteIntegracao(unittest.TestCase):
         self.assertEqual(comando["id"], "increase_volume")
 
     def teste_audio_bloquear_tela(self):
-        caminho = self._pular_se_sem_audio("lock_screen.wav")
+        caminho = self._pular_se_sem_audio("bloquear_tela.mp4")
         from src.transcritor import Transcritor
         transcritor = Transcritor(caminho_config=CAMINHO_CONFIG)
         texto = transcritor.transcrever_arquivo(caminho)
