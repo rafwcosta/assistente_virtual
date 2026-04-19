@@ -82,24 +82,24 @@ class TesteAtuador(unittest.TestCase):
             config = json.load(f)
         cls.comandos = {cmd["id"]: cmd for cmd in config["commands"]}
 
-    @patch("webbrowser.open")
+    @patch("src.atuadores.webbrowser.open")
     def teste_abrir_navegador(self, mock_wb):
         resultado = self.atuador.executar(self.comandos["open_browser"])
         self.assertTrue(resultado)
         mock_wb.assert_called_once()
 
-    @patch("subprocess.Popen")
+    @patch("src.atuadores.subprocess.Popen")
     def teste_abrir_editor(self, mock_popen):
         resultado = self.atuador.executar(self.comandos["open_editor"])
         self.assertTrue(resultado)
         self.assertGreater(mock_popen.call_count, 0)
 
-    @patch("os.system", return_value=0)
+    @patch("src.atuadores.os.system", return_value=0)
     def teste_aumentar_volume(self, mock_os):
         resultado = self.atuador.executar(self.comandos["increase_volume"])
         self.assertTrue(resultado)
 
-    @patch("os.system", return_value=0)
+    @patch("src.atuadores.os.system", return_value=0)
     def teste_bloquear_tela(self, mock_os):
         resultado = self.atuador.executar(self.comandos["lock_screen"])
         self.assertTrue(resultado)
@@ -123,7 +123,7 @@ class TesteIntegracao(unittest.TestCase):
             self.skipTest(f"Áudio não encontrado: {caminho}\nExecute 'python generate_test_audio.py' primeiro.")
         return caminho
 
-    @patch("webbrowser.open")
+    @patch("src.atuadores.webbrowser.open")
     def teste_pipeline_abrir_navegador(self, mock_wb):
         comando = self.processador.encontrar_comando("abrir navegador")
         self.assertIsNotNone(comando)
@@ -131,21 +131,21 @@ class TesteIntegracao(unittest.TestCase):
         self.assertTrue(self.atuador.executar(comando))
         mock_wb.assert_called_once()
 
-    @patch("subprocess.Popen")
+    @patch("src.atuadores.subprocess.Popen")
     def teste_pipeline_abrir_editor(self, mock_popen):
         comando = self.processador.encontrar_comando("abrir editor de código")
         self.assertIsNotNone(comando)
         self.assertEqual(comando["id"], "open_editor")
         self.assertTrue(self.atuador.executar(comando))
 
-    @patch("os.system", return_value=0)
+    @patch("src.atuadores.os.system", return_value=0)
     def teste_pipeline_aumentar_volume(self, mock_os):
         comando = self.processador.encontrar_comando("aumentar volume")
         self.assertIsNotNone(comando)
         self.assertEqual(comando["id"], "increase_volume")
         self.assertTrue(self.atuador.executar(comando))
 
-    @patch("os.system", return_value=0)
+    @patch("src.atuadores.os.system", return_value=0)
     def teste_pipeline_bloquear_tela(self, mock_os):
         comando = self.processador.encontrar_comando("bloquear tela")
         self.assertIsNotNone(comando)

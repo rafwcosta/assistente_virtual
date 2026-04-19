@@ -3,7 +3,12 @@
     {
       "id": "open_browser",
       "keywords": [
-        "abrir navegador"
+        "abrir navegador",
+        "abre navegador",
+        "abra o navegador",
+        "abrir o navegador",
+        "abra navegador",
+        "iniciar navegador"
       ],
       "action": "open_browser",
       "description": "Abre o navegador padrão do sistema",
@@ -12,7 +17,13 @@
     {
       "id": "open_editor",
       "keywords": [
-        "abrir editor"
+        "abrir editor",
+        "abre editor",
+        "abrir editor de código",
+        "editor de código",
+        "abrir vscode",
+        "abrir vs code",
+        "iniciar editor"
       ],
       "action": "open_editor",
       "description": "Abre o editor de código configurado",
@@ -21,7 +32,12 @@
     {
       "id": "increase_volume",
       "keywords": [
-        "aumentar volume"
+        "aumentar volume",
+        "aumenta o volume",
+        "aumentar o volume",
+        "subir volume",
+        "volume alto",
+        "mais volume"
       ],
       "action": "increase_volume",
       "description": "Aumenta o volume do sistema",
@@ -30,7 +46,12 @@
     {
       "id": "lock_screen",
       "keywords": [
-        "bloquear tela"
+        "bloquear tela",
+        "bloquear a tela",
+        "bloqueia a tela",
+        "travar tela",
+        "travar a tela",
+        "bloquear computador"
       ],
       "action": "lock_screen",
       "description": "Bloqueia a tela do computador",

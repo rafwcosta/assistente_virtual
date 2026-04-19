@@ -1,9 +1,27 @@
+# ============================================================
+# Assistente Virtual — Dependências
+# ============================================================
+
+# --- Transcrição de fala (HuggingFace / Whisper) ---
 transformers>=4.40.0
 torch>=2.0.0
+# torchaudio    # Opcional — necessário em alguns ambientes
+
+# --- Captura de áudio via microfone (sem SpeechRecognition) ---
 sounddevice>=0.4.6
 scipy>=1.10.0
 numpy>=1.24.0
+
+# --- Processamento de Linguagem Natural ---
 nltk>=3.8.1
+
+# --- Geração de áudio para testes (TTS) ---
 gtts>=2.3.2
 pydub>=0.25.1
+# ffmpeg deve ser instalado separadamente:
+#   Linux : sudo apt install ffmpeg
+#   Mac   : brew install ffmpeg
+#   Win   : https://ffmpeg.org/download.html
+
+# --- Utilitários de áudio ---
 soundfile>=0.12.1
