@@ -12,7 +12,8 @@
     {
       "id": "open_editor",
       "keywords": [
-        "abrir editor"
+        "abrir editor",
+        "abre editor"
       ],
       "action": "open_editor",
       "description": "Abre o editor de código configurado",
