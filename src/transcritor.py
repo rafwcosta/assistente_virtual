@@ -3,12 +3,16 @@ import json
 import tempfile
 import numpy as np
 
+sd = None
+wav_io = None
+_AUDIO_DISPONIVEL = False
+
 try:
     import sounddevice as sd
     import scipy.io.wavfile as wav_io
     _AUDIO_DISPONIVEL = True
 except (OSError, ImportError):
-    _AUDIO_DISPONIVEL = False
+    pass
 
 from transformers import pipeline
 
@@ -56,6 +60,7 @@ class Transcritor:
         else:
             caminho_para_transcrever = caminho_audio
 
+        assert self._pipeline is not None
         resultado = self._pipeline(
             caminho_para_transcrever,
             generate_kwargs={"language": self.idioma},
@@ -64,11 +69,11 @@ class Transcritor:
         if arquivo_temporario:
             os.unlink(arquivo_temporario)
 
-        texto = resultado["text"].lower().strip()
+        texto = str(resultado[0]["text"] if isinstance(resultado, list) else resultado["text"]).lower().strip()
         print(f"[TRANSCRITOR] Transcrição: '{texto}'")
         return texto
 
-    def gravar_e_transcrever(self, duracao: int = None) -> str:
+    def gravar_e_transcrever(self, duracao: int | None = None) -> str:
         if duracao is None:
             duracao = self.duracao_gravacao
 
@@ -76,6 +81,7 @@ class Transcritor:
             raise RuntimeError("sounddevice/PortAudio não disponível. Instale portaudio19-dev.")
 
         print(f"[TRANSCRITOR] Gravando por {duracao} segundo(s)... Fale agora!")
+        assert sd is not None
         audio = sd.rec(
             int(duracao * self.taxa_amostragem),
             samplerate=self.taxa_amostragem,
@@ -85,6 +91,7 @@ class Transcritor:
         sd.wait()
         print("[TRANSCRITOR] Gravação finalizada.")
 
+        assert wav_io is not None
         with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
             audio_int16 = (audio * 32767).astype(np.int16)
             wav_io.write(tmp.name, self.taxa_amostragem, audio_int16)
