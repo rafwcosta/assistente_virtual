@@ -35,12 +35,35 @@ class Transcritor:
             )
             print("[TRANSCRITOR] Modelo carregado com sucesso.")
 
+    def _converter_para_wav(self, caminho_audio: str) -> str:
+        from pydub import AudioSegment
+        audio = AudioSegment.from_file(caminho_audio)
+        audio = audio.set_frame_rate(16000).set_channels(1)
+        tmp = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
+        audio.export(tmp.name, format="wav")
+        return tmp.name
+
     def transcrever_arquivo(self, caminho_audio: str) -> str:
         self._carregar_modelo()
+
+        extensao = os.path.splitext(caminho_audio)[1].lower()
+        arquivo_temporario = None
+
+        if extensao not in (".wav", ".flac", ".mp3"):
+            print(f"[TRANSCRITOR] Convertendo '{extensao}' para WAV...")
+            arquivo_temporario = self._converter_para_wav(caminho_audio)
+            caminho_para_transcrever = arquivo_temporario
+        else:
+            caminho_para_transcrever = caminho_audio
+
         resultado = self._pipeline(
-            caminho_audio,
+            caminho_para_transcrever,
             generate_kwargs={"language": self.idioma},
         )
+
+        if arquivo_temporario:
+            os.unlink(arquivo_temporario)
+
         texto = resultado["text"].lower().strip()
         print(f"[TRANSCRITOR] Transcrição: '{texto}'")
         return texto
